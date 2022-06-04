@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<TITLE>Wordly Lite</TITLE>
+</HEAD>
+<BODY>
+<INPUT placeholder="Guess my word" id = "in">
+<P ID = "out"></P>
+
+<SCRIPT LANGUAGE="JavaScript">
+const _secret = "slovo";
+const legend = "<br><br><b>Legend:</b><br>Y = correct letter at the correct position<br>C = the word contains this letter on a different position<br>N = the word does not contain this letter"
+const input = document.querySelector("#in");
+input.addEventListener("input", checkGuess);
+
+function checkGuess() {
+    const guess = input.value.toString().toLowerCase();
+    if (guess.length !== 5) {
+	writeText("Guess must be 5 characters long");
+	return;
+    }
+    let result = "";
+    for(i = 0; i<guess.length; i++){
+    	let char = guess.charAt(i);
+	if (char === _secret.charAt(i)) {
+	     result += "Y";
+	     continue;
+	}
+	if (_secret.includes(char)) {
+	     result += "C";
+	     continue;
+	}
+	result += "N";
+    }
+    writeText(result === "YYYYY" ? "YAY YOU GOT IT!" : result + legend);
+}
+function writeText (value) {
+    document.getElementById("out").innerHTML = value;
+}
+</SCRIPT>
+</BODY>
+</HTML>
